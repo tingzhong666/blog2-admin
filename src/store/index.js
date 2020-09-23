@@ -21,7 +21,6 @@ export default new Vuex.Store({
   },
   actions: {
     async auth (store) {
-      console.log(process.env.VUE_APP_API_URL)
       const token = await localStorage.getItem('token')
       // 没有 token
       if (token === null) {

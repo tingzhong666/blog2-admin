@@ -10,31 +10,31 @@ const routes = [
   },
   {
     path: '/intro',
-    component: () => import('@/views/intro.vue')
+    component: () => import('@/views/intro')
   },
   {
     path: '/set',
-    component: () => import('@/views/set.vue')
+    component: () => import('@/views/set')
   },
   {
     path: '/about',
-    component: () => import('@/views/about.vue')
+    component: () => import('@/views/about')
   },
   {
     path: '/list',
-    component: () => import('@/views/list.vue')
+    component: () => import('@/views/list')
   },
   {
     path: '/tag',
-    component: () => import('@/views/tag.vue')
+    component: () => import('@/views/tag')
   },
   {
     path: '/news',
-    component: () => import('@/views/news.vue')
+    component: () => import('@/views/news')
   },
   {
     path: '/links',
-    component: () => import('@/views/links.vue')
+    component: () => import('@/views/links')
   }
 ]
 

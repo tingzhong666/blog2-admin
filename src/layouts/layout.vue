@@ -55,16 +55,19 @@ export default {
 
 <style lang="stylus" scoped>
 .layout
-  display flex
   .menu
     width 200px
     height 100vh
+    position fixed
+    left 0
+    top 0
     > li > span
       display inline-block
       margin-left 10px
   main
     --width calc(100vw - 200px)
     width var(--width)
+    float right
     .container
       width calc(var(--width) - 20px)
       margin 10px auto
