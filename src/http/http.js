@@ -16,9 +16,16 @@ http.interceptors.request.use(config => {
   if (config.url === '/auth') return config
 
   if (config.method === 'post') {
+    // 后端token只接受 json 和 params
+    if (config.data instanceof FormData) {
+      if (config.params === undefined) config.params = {}
+      config.params.token = store.state.token
+    }
+
     if (config.data === undefined) config.data = {}
     config.data.token = store.state.token
   }
+
   if (config.method === 'get') {
     if (config.params === undefined) config.params = {}
     config.params.token = store.state.token

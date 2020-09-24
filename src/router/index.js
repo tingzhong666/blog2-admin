@@ -35,6 +35,14 @@ const routes = [
   {
     path: '/links',
     component: () => import('@/views/links')
+  },
+  {
+    path: '/list/add',
+    component: () => import('@/views/editor')
+  },
+  {
+    path: '/list/edi',
+    component: () => import('@/views/editor')
   }
 ]
 

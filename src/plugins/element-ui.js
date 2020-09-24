@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import {
 //   Pagination,
-//   Dialog,
+  Dialog,
 //   Autocomplete,
 //   Dropdown,
 //   DropdownMenu,
@@ -19,17 +19,17 @@ import {
 //   CheckboxButton,
 //   CheckboxGroup,
   Switch,
-//   Select,
-//   Option,
+  Select,
+  Option,
 //   OptionGroup,
   Button,
 //   ButtonGroup,
-//   Table,
-//   TableColumn,
+  Table,
+  TableColumn,
 //   DatePicker,
 //   TimeSelect,
 //   TimePicker,
-//   Popover,
+  Popover,
 //   Tooltip,
 //   Breadcrumb,
 //   BreadcrumbItem,
@@ -37,7 +37,7 @@ import {
 //   FormItem,
 //   Tabs,
 //   TabPane,
-//   Tag,
+  Tag,
 //   Tree,
   Alert,
 //   Slider,
@@ -48,7 +48,7 @@ import {
 //   Progress,
 //   Spinner,
 //   Badge,
-  Card
+  Card,
 //   Rate,
 //   Steps,
 //   Step,
@@ -76,11 +76,12 @@ import {
 //   Loading,
 //   MessageBox,
 //   Message,
-//   Notification
+//   Notification,
+  // Popconfirm
 } from 'element-ui'
 
 // Vue.use(Pagination)
-// Vue.use(Dialog)
+Vue.use(Dialog)
 // Vue.use(Autocomplete)
 // Vue.use(Dropdown)
 // Vue.use(DropdownMenu)
@@ -98,17 +99,17 @@ Vue.use(Input)
 // Vue.use(CheckboxButton)
 // Vue.use(CheckboxGroup)
 Vue.use(Switch)
-// Vue.use(Select)
-// Vue.use(Option)
+Vue.use(Select)
+Vue.use(Option)
 // Vue.use(OptionGroup)
 Vue.use(Button)
 // Vue.use(ButtonGroup)
-// Vue.use(Table)
-// Vue.use(TableColumn)
+Vue.use(Table)
+Vue.use(TableColumn)
 // Vue.use(DatePicker)
 // Vue.use(TimeSelect)
 // Vue.use(TimePicker)
-// Vue.use(Popover)
+Vue.use(Popover)
 // Vue.use(Tooltip)
 // Vue.use(Breadcrumb)
 // Vue.use(BreadcrumbItem)
@@ -116,7 +117,7 @@ Vue.use(Button)
 // Vue.use(FormItem)
 // Vue.use(Tabs)
 // Vue.use(TabPane)
-// Vue.use(Tag)
+Vue.use(Tag)
 // Vue.use(Tree)
 Vue.use(Alert)
 // Vue.use(Slider)
@@ -152,6 +153,7 @@ Vue.use(Card)
 // Vue.use(Backtop)
 // Vue.use(PageHeader)
 // Vue.use(CascaderPanel)
+// Vue.use(Popconfirm)
 
 // Vue.use(Loading.directive)
 
