@@ -77,7 +77,7 @@ import {
 //   MessageBox,
 //   Message,
 //   Notification,
-  // Popconfirm
+  Popconfirm
 } from 'element-ui'
 
 // Vue.use(Pagination)
@@ -153,7 +153,7 @@ Vue.use(Card)
 // Vue.use(Backtop)
 // Vue.use(PageHeader)
 // Vue.use(CascaderPanel)
-// Vue.use(Popconfirm)
+Vue.use(Popconfirm)
 
 // Vue.use(Loading.directive)
 

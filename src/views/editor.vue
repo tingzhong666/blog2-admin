@@ -22,18 +22,32 @@
         />
       </div>
 
+      <div class="item">
+        <p>私密：</p>
+        <el-switch
+          v-model="body.is_private"
+        />
+      </div>
+
+      <div class="item">
+        <p>置顶：</p>
+        <el-switch
+          v-model="body.is_top"
+        />
+      </div>
+
       <div class="item tag">
         <p>标签：</p>
         <!-- 已添加 -->
         <el-tag
           v-for="(item, i) in body.tag"
-          :key="item"
+          :key="item.id"
           closable
           :disable-transitions="false"
           @close="tagRm(i)"
           class="tag"
         >
-          {{ tags.find(v => v.id === item).name }}
+          {{ item.name }}
         </el-tag>
 
         <!-- 搜索 then 添加 -->
@@ -47,8 +61,8 @@
             v-for="item in tags"
             :key="item.id"
             :label="item.name"
-            :value="item.id">
-          </el-option>
+            :value="item.id"
+          />
         </el-select>
       </div>
 
@@ -98,7 +112,10 @@ export default {
         title: '',
         intro: '',
         tag: [],
-        is_reward: false
+        is_reward: false,
+        is_private: false,
+        is_top: false,
+        img: ''
       },
       // 预添加的标签id
       tagId: null,
@@ -108,8 +125,8 @@ export default {
   },
   computed: {
     title () {
-      if (this.$route.fullPath === '/list/add') return '新增'
-      if (this.$route.fullPath === '/list/edi') return '编辑'
+      if (this.$route.path === '/list/add') return '新增'
+      if (this.$route.path === '/list/edi') return '编辑'
       return ''
     }
   },
@@ -124,8 +141,11 @@ export default {
       this.body.md = ''
       this.body.title = ''
       this.body.intro = ''
+      this.body.img = ''
       this.body.tag = []
       this.body.is_reward = false
+      this.body.is_private = false
+      this.body.is_top = false
     },
     async tagsGet () {
       const res = await api.tag.get()
@@ -133,10 +153,11 @@ export default {
     },
     // 标签添加
     tagAdd () {
+      const id = this.tagId
       // 重复添加
-      if (this.body.tag.find(v => v === this.tagId) !== undefined) return
+      if (this.body.tag.find(v => v.id === id) !== undefined) return
 
-      this.body.tag.push(this.tagId)
+      this.body.tag.push(this.tags.find(v => v.id === id))
       // this.tagAddInput = false
     },
     // 标签删除
@@ -145,18 +166,57 @@ export default {
     },
     // 提交
     submit () {
-      if (this.$route.fullPath === '/list/add') this.set()
-      if (this.$route.fullPath === '/list/edi') this.add()
+      if (this.$route.path === '/list/add') this.add()
+      if (this.$route.path === '/list/edi') this.set()
     },
     // 修改
     async set () {
+      const res = await api.artical.post({
+        id: this.$route.query.id,
+        title: this.body.title,
+        intro: this.body.intro,
+        content: this.body.md,
+        img: this.body.img,
+        isReward: this.body.is_reward,
+        isPrivate: this.body.is_private,
+        isTop: this.body.is_top,
+        tagId: this.body.tag.map(v => v.id)
+      })
+
+      if (res.code === 1) this.$router.push('/list')
     },
     // 新增
     async add () {
+      const res = await api.artical.add({
+        title: this.body.title,
+        intro: this.body.intro,
+        content: this.body.md,
+        img: this.body.img,
+        isReward: this.body.is_reward,
+        isPrivate: this.body.is_private,
+        isTop: this.body.is_top,
+        tagId: this.body.tag.map(v => v.id)
+      })
+
+      if (res.code === 1) this.$router.push('/list')
+    },
+    // 获取
+    async get () {
+      const res = await api.artical.get(this.$route.query.id)
+
+      this.body.md = res.data.content
+      this.body.title = res.data.title
+      this.body.intro = res.data.intro
+      this.body.img = res.data.img
+      this.body.tag = res.data.tag
+      this.body.is_reward = res.data.is_reward
+      this.body.is_private = res.data.is_private
+      this.body.is_top = res.data.is_top
     }
   },
   async created () {
-    await this.tagsGet()
+    if (this.$route.path === '/list/edi') this.get()
+    this.tagsGet()
   }
 }
 </script>

@@ -9,61 +9,78 @@
         prop="created_time"
         label="创建时间"
       />
+
       <el-table-column
         prop="title"
         label="标题"
       />
+
       <el-table-column
         prop="readed"
         label="浏览量"
       />
+
       <el-table-column
         prop="tag"
         label="标签"
-      />
+      >
+        <template slot-scope="scoped">
+          <el-tag
+            v-for="item in scoped.row.tag"
+            :key="item.id"
+            :disable-transitions="false"
+            class="tag"
+            size="mini"
+          >
+            {{ item.name }}
+          </el-tag>
+        </template>
+      </el-table-column>
+
       <el-table-column
-        prop="is_reward"
         label="赞赏"
-      />
+      >
+      <!-- 一个事件 -->
+        <!-- <template slot-scope="scoped">
+          <el-switch
+            v-model="scoped.row.is_reward"
+          />
+        </template> -->
+      </el-table-column>
+
       <el-table-column
-        prop="is_top"
         label="置顶"
-      />
+      >
+        <template slot-scope="scoped">
+          {{ scoped.row.is_top ? '√': '×' }}
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        label="私密"
+      >
+        <template slot-scope="scoped">
+          {{ scoped.row.is_private ? '√': '×' }}
+        </template>
+      </el-table-column>
+
       <el-table-column
         label="操作"
         fiexd="right"
       >
         <template slot-scope="scoped" class="handle">
-          <el-popover
-            placement="top"
-            width="160"
-            v-model="rmPopover">
-            <p>确定删除吗？</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="rmPopover = false">取消</el-button>
-              <el-button type="primary" size="mini" @click="rm(scoped.row.id)">确定</el-button>
-            </div>
-            <el-button slot="reference" type="danger" size="small" plain>删除</el-button>
-          </el-popover>
-
-          <el-button class="btn" @click="setDialog = true; body = { ...scoped.row }" type="primary" size="small" plain>编辑</el-button>
-          <el-dialog
-            title="编辑"
-            :visible.sync="setDialog"
+          <el-popconfirm
+            confirmButtonText='好的'
+            cancelButtonText='不用了'
+            icon="el-icon-info"
+            iconColor="red"
+            title="确定删除吗？"
+            @onConfirm="rm(scoped.row.id)"
           >
-            <el-input
-              v-model="body.name"
-              placeholder="请输入内容"
-            />
+            <el-button slot="reference" type="danger" size="small" plain>删除</el-button>
+          </el-popconfirm>
 
-            <div
-              slot="footer"
-              class="dialog-footer"
-            >
-              <el-button @click="setDialog = false; bodyClear()">取 消</el-button>
-              <el-button type="primary" @click="set()">确 定</el-button>
-            </div>
-          </el-dialog>
+          <el-button class="btn" @click="editor(scoped.row.id)" type="primary" size="small" plain>编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -71,14 +88,33 @@
 </template>
 
 <script>
+import api from '@/http/api'
+
 export default {
-  data () {
-    return {
-      list: []
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    }
+  },
+  methods: {
+    async rm (id) {
+      await api.artical.rm(id)
+
+      this.$emit('refresh')
+    },
+    async editor (id) {
+      this.$router.push('/list/edi?id=' + id)
     }
   }
 }
 </script>
 
 <style lang='stylus' scoped>
+.component
+  .list
+    .tag
+      margin 2px
+    .btn
+      margin-left 10px
 </style>

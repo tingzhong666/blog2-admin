@@ -53,5 +53,33 @@ export default {
     async rm (id) {
       return await http.get('/tag_rm', { params: { id } })
     }
+  },
+  artical: {
+    async add ({ title, intro, content, img = null, isReward, isPrivate, isTop, tagId = [] }) {
+      return await http.post('/artical_add', { title, intro, content, img, is_reward: isReward, is_private: isPrivate, is_top: isTop, tag_id: tagId })
+    },
+    async post ({ id, title, intro, content, img = null, isReward, isPrivate, isTop, tagId = [] }) {
+      return await http.post('/artical_modify', { id, title, intro, content, img, is_reward: isReward, is_private: isPrivate, is_top: isTop, tag_id: tagId })
+    },
+    async rm (id) {
+      return await http.get('/artical_rm', { params: { id } })
+    },
+    async get (id) {
+      return await http.get('/artical_details', { params: { id } })
+    }
+  },
+  async list ({
+    limit = 10,
+    page = 1,
+    tag = 0,
+    q,
+    time = -1,
+    power = 0,
+    sort = 1
+  }) {
+    const params = { limit, page, time, power, sort }
+    if (q) params.q = q
+    else params.tag = tag
+    return await http.get('/list', { params })
   }
 }
