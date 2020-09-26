@@ -68,6 +68,7 @@ export default {
       return await http.get('/artical_details', { params: { id } })
     }
   },
+  // 文章列表
   async list ({
     limit = 10,
     page = 1,
@@ -81,5 +82,9 @@ export default {
     if (q) params.q = q
     else params.tag = tag
     return await http.get('/list', { params })
+  },
+  // 单个文章赞赏设置
+  async reward ({ id, switc }) {
+    return await http.post('/reward', { id, switch: switc }) // 关键词原因
   }
 }

@@ -40,19 +40,22 @@
       <el-table-column
         label="赞赏"
       >
-      <!-- 一个事件 -->
-        <!-- <template slot-scope="scoped">
+        <template slot-scope="scoped">
           <el-switch
             v-model="scoped.row.is_reward"
+            @change="rewardSwitch(scoped.row.id, $event)"
           />
-        </template> -->
+        </template>
       </el-table-column>
 
       <el-table-column
         label="置顶"
       >
         <template slot-scope="scoped">
-          {{ scoped.row.is_top ? '√': '×' }}
+          <el-switch
+            v-model="scoped.row.is_top"
+            disabled
+          />
         </template>
       </el-table-column>
 
@@ -60,7 +63,10 @@
         label="私密"
       >
         <template slot-scope="scoped">
-          {{ scoped.row.is_private ? '√': '×' }}
+          <el-switch
+            v-model="scoped.row.is_private"
+            disabled
+          />
         </template>
       </el-table-column>
 
@@ -105,6 +111,9 @@ export default {
     },
     async editor (id) {
       this.$router.push('/list/edi?id=' + id)
+    },
+    async rewardSwitch (id, newV) {
+      await api.reward({ id, switc: newV })
     }
   }
 }
