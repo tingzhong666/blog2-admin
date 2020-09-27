@@ -8,5 +8,8 @@ module.exports = {
         path.join(__dirname, './src/assets/*.styl')
       ]
     }
-  }
+  },
+
+  publicPath: '/admin',
+  assetsDir: 'static'
 }
